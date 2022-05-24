@@ -109,6 +109,15 @@ void go_z(int val){
   }  
 }
 
+void stop_all(){
+  if(stepper_1->isRunning())
+    stepper_1->forceStop();
+  if(stepper_2->isRunning())
+    stepper_2->forceStop();
+  if(stepper_3->isRunning())
+    stepper_3->forceStop();
+}
+
 void setup() {
 
   engine.init();
@@ -222,11 +231,15 @@ void loop() {
       Serial.println("go lz "+ String(compar[1]));
       go_z(compar[1].toInt()*l_direction);
     }
-    else if(compar[0] == "setAccel"){
+    else if(compar[0] == "setacc"){
       default_acceleration = compar[1].toInt();
     }
-    else if (compar[0] == "setSpeed"){
+    else if (compar[0] == "setsp"){
       default_speed = compar[1].toInt();
+    }
+    else if (compar[0] == "stop"){
+      Serial.println("Stop all");
+      stop_all();
     }
     else {
       Serial.println("Wrong command");  

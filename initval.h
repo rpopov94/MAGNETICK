@@ -31,6 +31,4 @@ volatile int32_t maxZ = 10000;
 volatile int32_t minZ = 0;
 int32_t l_direction = -1;
 
-
-
 #endif
