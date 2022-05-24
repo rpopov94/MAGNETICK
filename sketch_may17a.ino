@@ -221,7 +221,13 @@ void loop() {
     else if(compar[0] == "gozl"){
       Serial.println("go lz "+ String(compar[1]));
       go_z(compar[1].toInt()*l_direction);
-    } 
+    }
+    else if(compar[0] == "setAccel"){
+      default_acceleration = compar[1].toInt();
+    }
+    else if (compar[0] == "setSpeed"){
+      default_speed = compar[1].toInt();
+    }
     else {
       Serial.println("Wrong command");  
     }
