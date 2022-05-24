@@ -110,11 +110,8 @@ void go_z(int val){
 }
 
 void stop_all(){
-  if(stepper_1->isRunning())
     stepper_1->forceStop();
-  if(stepper_2->isRunning())
     stepper_2->forceStop();
-  if(stepper_3->isRunning())
     stepper_3->forceStop();
 }
 
