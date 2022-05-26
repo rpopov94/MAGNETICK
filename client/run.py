@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, uic
+from cnc import get_serial_ports, speeds
 
 
 class ChMLogger(QtWidgets.QWidget):
@@ -8,6 +9,9 @@ class ChMLogger(QtWidgets.QWidget):
         Form, Base = uic.loadUiType("ui/main.ui")
         self.ui = Form()
         self.ui.setupUi(self)
+
+        self.ui.port.addItems(get_serial_ports())
+        self.ui.baudrate.addItems(speeds)
 
 if __name__ == "__main__":
     import sys
