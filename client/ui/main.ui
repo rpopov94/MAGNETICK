@@ -36,35 +36,11 @@
     <widget class="QTextBrowser" name="info"/>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="0">
-      <widget class="QComboBox" name="port"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QPushButton" name="connect_port">
-       <property name="text">
-        <string>Connect</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QComboBox" name="baudrate"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="port_l">
-       <property name="text">
-        <string>PORT</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="baudrate_l">
-       <property name="text">
-        <string>BAUDRATE</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QPushButton" name="init_p">
+     <property name="text">
+      <string>INIT</string>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_2">

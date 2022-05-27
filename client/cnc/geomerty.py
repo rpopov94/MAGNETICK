@@ -1,8 +1,6 @@
 class Geometry: 
 
-    NORMALIZE = 1
-
-    def __init__(self, min_x=0, max_x=1000, min_y=0, max_y=1000, min_z=0, max_z=1000) -> None:
+    def __init__(self, min_x=0, max_x=1000, min_y=0, max_y=1000, min_z=0, max_z=1000, NORMALIZE=1) -> None:
         self.max_x = max_x
         self.min_x = min_x
         self.max_y = max_y
@@ -12,6 +10,7 @@ class Geometry:
         self.current_x = None
         self.current_y = None
         self.current_Z = None
+        self.NORMALIZE=NORMALIZE
 
     def set_geometry(self, **kwargs) -> None:
         self.max_x = kwargs['max_x']

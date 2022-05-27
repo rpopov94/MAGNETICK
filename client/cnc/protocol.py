@@ -3,15 +3,9 @@ from cnc.geomerty import Geometry
 
 class Protocol(Geometry):
     
-    def __init__(self, min_x=-1000, max_x=1000, min_y=-1000, max_y=1000, min_z=-1000, max_z=1000) -> None:
-        Geometry.__init__(self, min_x, max_x, min_y, max_y, min_z, max_z)
-        self.max_x = max_x
-        self.min_x = min_x
-        self.max_y = max_y
-        self.min_y = min_y
-        self.max_z = max_z
-        self.min_z = min_z
-    
+    def __init__(self, min_x=-1000, max_x=1000, min_y=-1000, max_y=1000, min_z=-1000, max_z=1000, normalize=1) -> None:
+        Geometry.__init__(self, min_x, max_x, min_y, max_y, min_z, max_z, normalize)
+
     '''Перемещение по xyz c к определенному положению'''
     def go_to_x(self, val):
         steps = self.goto_x(val)
@@ -52,6 +46,13 @@ class Protocol(Geometry):
 
     def stop(self):
         return [ord(c) for c in 'stop;']
+
+    '''Скорость/ускорение'''
+    def set_speed(self, speed):
+        return [ord(c) for c in f"setsp:{speed};"]
+
+    def set_acceleration(self, acceleration):
+        return [ord(c) for c in f"setacc:{acceleration};"]
 
 
     
