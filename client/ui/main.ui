@@ -41,7 +41,7 @@
       <widget class="QComboBox" name="port"/>
      </item>
      <item row="3" column="0">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="connect_port">
        <property name="text">
         <string>Connect</string>
        </property>
