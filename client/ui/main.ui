@@ -33,7 +33,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTextBrowser" name="info"/>
+    <widget class="QTextBrowser" name="textBrowser"/>
    </item>
    <item>
     <widget class="QPushButton" name="init_p">
@@ -132,28 +132,21 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="speed">
-       <property name="text">
-        <string>SET SPEED</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="accleration">
-       <property name="text">
-        <string>SET ACCEL</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QPushButton" name="stop">
-       <property name="text">
-        <string>STOP</string>
-       </property>
-      </widget>
-     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="clear_b">
+     <property name="text">
+      <string>CLEAR</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="stop_b">
+     <property name="text">
+      <string>STOP</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

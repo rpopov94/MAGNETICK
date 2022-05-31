@@ -1,6 +1,11 @@
-class Geometry: 
+import pickle
+import json
+
+class Geometry:
 
     def __init__(self, min_x=0, max_x=1000, min_y=0, max_y=1000, min_z=0, max_z=1000, NORMALIZE=1) -> None:
+
+        """Инициализация геометрии"""
         self.max_x = max_x
         self.min_x = min_x
         self.max_y = max_y
@@ -9,8 +14,9 @@ class Geometry:
         self.min_z = min_z
         self.current_x = None
         self.current_y = None
-        self.current_Z = None
-        self.NORMALIZE=NORMALIZE
+        self.current_z = None
+        self.NORMALIZE = NORMALIZE
+        self.temp = None
 
     def set_geometry(self, **kwargs) -> None:
         self.max_x = kwargs['max_x']
@@ -20,30 +26,28 @@ class Geometry:
         self.max_z = kwargs['max_z']
         self.min_z = kwargs['min_z']
 
+    '''Получить текущие координаты'''
     def get_position_x(self) -> float:
-        if self.min_x < self.current_x < self.max_x:
-            return self.current_x * self.NORMALIZE
-        return None
+        return self.current_x
+
 
     def get_position_y(self) -> float:
-        if self.min_y < self.current_y < self.max_y:
-            return self.current_y * self.NORMALIZE
-        return None
+        return self.current_y
 
     def get_position_z(self) -> float:
-        if self.min_z < self.current_z < self.max_z:
-            return self.current_z * self.NORMALIZE
-        return None
+        return self.current_z
 
+    '''Установить координаты'''
     def set_x(self, pos):
-        self.current_x = pos * self.NORMALIZE
+        self.current_x = pos
 
     def set_y(self, pos):
-        self.current_y = pos * self.NORMALIZE
+        self.current_y = pos
 
     def set_z(self, pos):
-        self.current_z = pos * self.NORMALIZE
-    
+        self.current_z = pos
+
+    '''Переместиться к положению'''
     def goto_x(self, pos) -> float:
         steps = None
         if pos < self.min_x:
