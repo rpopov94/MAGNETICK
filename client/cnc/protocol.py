@@ -1,5 +1,3 @@
-import os
-import json
 from cnc import conf, saveConfig
 from cnc.geomerty import Geometry
 

@@ -83,19 +83,19 @@ class CncArduino(QtWidgets.QWidget):
         self.ser.write(self.p.go_to_x(int(os.environ.get('MAX_X'))))
 
     def setmax_y(self):
-        self.ser.write(self.p.go_to_x(int(os.environ.get('MAX_Y'))))
+        self.ser.write(self.p.go_to_y(int(os.environ.get('MAX_Y'))))
 
     def setmax_z(self):
-        self.ser.write(self.p.go_to_x(int(os.environ.get('MAX_Z'))))
+        self.ser.write(self.p.go_to_z(int(os.environ.get('MAX_Z'))))
 
     def setmin_x(self):
         self.ser.write(self.p.go_to_x(int(os.environ.get('MIN_X'))))
 
     def setmin_y(self):
-        self.ser.write(self.p.go_to_x(int(os.environ.get('MIN_Y'))))
+        self.ser.write(self.p.go_to_y(int(os.environ.get('MIN_Y'))))
 
     def setmin_z(self):
-        self.ser.write(self.p.go_to_x(int(os.environ.get('MIN_Z'))))
+        self.ser.write(self.p.go_to_z(int(os.environ.get('MIN_Z'))))
 
     def rx_(self):
         self.pos_x += self.with_st
