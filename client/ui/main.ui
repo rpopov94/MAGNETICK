@@ -44,45 +44,31 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="set_max_x">
-       <property name="text">
-        <string>MAX X</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
-      <widget class="QPushButton" name="set_min_x">
+      <widget class="QPushButton" name="teor_st_b">
        <property name="text">
-        <string>MIN X</string>
+        <string>TEOR START</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="set_min_y">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="real_st_b">
        <property name="text">
-        <string>MIN Y</string>
+        <string>REAL START</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QPushButton" name="set_max_y">
+      <widget class="QPushButton" name="end_real_b">
        <property name="text">
-        <string>MAX Y</string>
+        <string>END REAL</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="set_max_z">
+     <item row="1" column="1">
+      <widget class="QPushButton" name="end_teor_b">
        <property name="text">
-        <string>MAX Z</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QPushButton" name="set_min_z">
-       <property name="text">
-        <string>MIN Z</string>
+        <string>END TEOR</string>
        </property>
       </widget>
      </item>

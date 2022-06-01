@@ -168,17 +168,17 @@ void loop() {
       istr = strtok (NULL,sep);
       i++;
     }
-    if(compar[0] == "gotox"){
+    if(compar[0] == "gotomax"){
       Serial.println("go "+ String(compar[1])+" to X");
-      gotoX(compar[1].toInt());
+      go_x(1000000);
+      go_y(1000000);
+      go_z(1000000);
     } 
-    else if(compar[0] == "gotoy"){
-      Serial.println("go "+ String(compar[1])+" to Y");
-      gotoY(compar[1].toInt());
-    }
-    else if(compar[0] == "gotoz"){
-      Serial.println("go "+ String(compar[1])+" to Z");
-      gotoZ(compar[1].toInt()); 
+    if(compar[0] == "gotomin"){
+      Serial.println("go "+ String(compar[1])+" to X");
+      go_x(-1000000);
+      go_y(-1000000);
+      go_z(-1000000);
     } 
     else if(compar[0] == "maxx"){
       Serial.println("Set max x "+ String(compar[1]));
@@ -225,6 +225,18 @@ void loop() {
       go_y(compar[1].toInt()*l_direction); 
     }
     else if(compar[0] == "gozl"){
+      Serial.println("go lz "+ String(compar[1]));
+      go_z(compar[1].toInt()*l_direction);
+    }
+    else if(compar[0] == "gox"){
+      Serial.println("go lx "+ String(compar[1]));
+      go_x(compar[1].toInt()*l_direction);
+    }
+    else if(compar[0] == "goy"){
+      Serial.println("go ly "+ String(compar[1]));
+      go_y(compar[1].toInt()*l_direction); 
+    }
+    else if(compar[0] == "goz"){
       Serial.println("go lz "+ String(compar[1]));
       go_z(compar[1].toInt()*l_direction);
     }

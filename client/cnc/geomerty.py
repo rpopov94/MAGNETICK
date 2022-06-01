@@ -4,7 +4,7 @@ import json
 
 class Geometry:
 
-    def __init__(self, min_x=0, max_x=1000, min_y=0, max_y=1000, min_z=0, max_z=1000, NORMALIZE=1) -> None:
+    def __init__(self, current_x, current_y, current_z, min_x=0, max_x=1000, min_y=0, max_y=1000, min_z=0, max_z=1000, NORMALIZE=1) -> None:
 
         """Инициализация геометрии"""
         self.max_x = max_x
@@ -13,9 +13,9 @@ class Geometry:
         self.min_y = min_y
         self.max_z = max_z
         self.min_z = min_z
-        self.current_x = None
-        self.current_y = None
-        self.current_z = None
+        self.current_x = current_x
+        self.current_y = current_y
+        self.current_z = current_z
         self.NORMALIZE = NORMALIZE
         self.temp = None
 
@@ -51,8 +51,7 @@ class Geometry:
 
     '''Переместиться к положению'''
 
-    def goto_x(self, pos) -> float:
-        steps = None
+    def goto_x(self, pos):
         if pos < self.min_x:
             steps = self.min_x - pos
             self.set_x(self.min_x)
@@ -74,8 +73,7 @@ class Geometry:
         else:
             return 0
 
-    def goto_y(self, pos) -> float:
-        steps = None
+    def goto_y(self, pos):
         if pos < self.min_y:
             steps = self.min_y - pos
             self.set_y(self.min_y)
@@ -95,8 +93,7 @@ class Geometry:
         else:
             return 0
 
-    def goto_z(self, pos) -> float:
-        steps = None
+    def goto_z(self, pos):
         if pos < self.min_z:
             steps = self.min_z - pos
             self.set_z(self.min_z)
