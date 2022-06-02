@@ -72,8 +72,6 @@ class CncArduino(QtWidgets.QWidget):
         self.ui.end_real_b.clicked.connect(self.setmin_r)
         self.ui.teor_st_b.clicked.connect(self.setmax_t)
         self.ui.end_teor_b.clicked.connect(self.setmin_t)
-        # self.ui.set_min_y.clicked.connect(self.setmin_y)
-        # self.ui.set_min_z.clicked.connect(self.setmin_z)
 
     def setmax_r(self):
         self.ser.write(self.p.gotomax())
@@ -87,11 +85,13 @@ class CncArduino(QtWidgets.QWidget):
         self.ser.write(self.p.go_to_x(current=self.pos_x))
         self.ser.write(self.p.go_to_y(current=self.pos_y))
         self.ser.write(self.p.go_to_z(current=self.pos_z))
+        self.ui.textBrowser.append(f"coordinats : in set end position")
 
     def setmin_t(self):
         self.ser.write(self.p.go_to_x(current=self.pos_x, dir=-1))
         self.ser.write(self.p.go_to_y(current=self.pos_y, dir=-1))
         self.ser.write(self.p.go_to_z(current=self.pos_z, dir=-1))
+        self.ui.textBrowser.append(f"coordinats : in set start position")
 
     def rx_(self):
         self.pos_x += self.with_st
@@ -149,6 +149,14 @@ class CncArduino(QtWidgets.QWidget):
                 self.pos_z -= self.with_st
                 self.ser.write(self.p.move_z(self.go, current=self.pos_z, dir=-1))
                 self.ui.textBrowser.append(f"pos_z :{self.pos_z}")
+            elif e.key() == Qt.Key_1:
+                self.setmax_r()
+            elif e.key() == Qt.Key_3:
+                self.setmin_r()
+            elif e.key() == Qt.Key_Plus:
+                self.setmax_t()
+            elif e.key() == Qt.Key_Minus:
+                self.setmin_t()
             elif e.key() == Qt.Key_Escape:
                 self.ser.write(self.p.stop())
         else:

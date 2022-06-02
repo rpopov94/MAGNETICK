@@ -113,3 +113,12 @@ class Geometry:
                 return steps
         else:
             return 0
+
+    def go_to(self, current, dir=1):
+        steps = 0
+        if self.min_x <= current <= self.max_x:
+            if dir > 0:
+                steps = self.max_x - current
+            elif dir < 0:
+                steps = -1 * (current - self.min_x)
+        return steps

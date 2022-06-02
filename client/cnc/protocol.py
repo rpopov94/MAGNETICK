@@ -16,36 +16,25 @@ class Protocol(Geometry):
         self.current_x = current_x
         self.current_y = current_y
         self.current_z = current_z
+        self.normalize=normalize
 
     '''Перемещение по xyz c к определенному положению
         - val: int - значению к текущему положению 
     '''
 
     def go_to_x(self, current, dir=1):
-        steps = 0
-        if self.min_x <= current <= self.max_x:
-            if dir > 0:
-                steps = self.max_x - current
-            elif dir < 0:
-                steps = current - self.min_x
+        self.set_x(current)
+        steps = self.go_to(current, dir) * self.normalize
         return [ord(c) for c in f"gox:{steps};"]
 
     def go_to_y(self, current, dir=1):
-        steps = 0
-        if self.min_y <= current <= self.max_y:
-            if dir > 0:
-                steps = self.max_y - current
-            elif dir < 0:
-                steps = -1 * (current - self.min_x)
+        self.set_y(current)
+        steps = self.go_to(current, dir) * self.normalize
         return [ord(c) for c in f"goy:{steps};"]
 
     def go_to_z(self, current, dir=1):
-        steps = 0
-        if self.min_z <= current <= self.max_z:
-            if dir > 0:
-                steps = self.max_z - current
-            elif dir < 0:
-                steps = (current - self.min_z) * -1
+        self.set_z(current)
+        steps = self.go_to(current, dir) * self.normalize
         return [ord(c) for c in f"goz:{steps};"]
 
     '''Простое перемещение по xyz
@@ -115,9 +104,11 @@ class Protocol(Geometry):
 
     '''В начало координат'''
     def gotomax(self):
+        self.set_x(self.max_x)
         return [ord(c) for c in 'gotomax;']
 
     def gotomin(self):
+        self.set_x(self.min_x)
         return [ord(c) for c in 'gotomin;']
 
     '''Остановка всего'''
