@@ -7,8 +7,7 @@ from cnc import dict_port, conf, loadConfig, saveConfig
 from cnc.protocol import Protocol
 from magnetron._xyz import XYZ
 from magnetron._magnetic import Magnetic
-
-from client import save_data, get_data, get_mas, get_mean
+from client import save_data, get_data, get_mas, get_mean, save_coors
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.config'))
@@ -16,8 +15,7 @@ load_dotenv(os.path.join(basedir, '.config'))
 
 class CncArduino(QtWidgets.QWidget):
     with_st = int(os.environ.get('N_STEP'))
-    normalize = int(os.environ.get('NORMALIZE'))
-    go = with_st * normalize
+    go = with_st
 
     def __init__(self):
         super().__init__()
@@ -102,7 +100,6 @@ class CncArduino(QtWidgets.QWidget):
         self.ui.y_raw.clicked.connect(self.graph_y)
         self.ui.mean_raw.clicked.connect(self.graph_m)
 
-
     def graph_z(self):
         self.z_w.show()
 
@@ -139,61 +136,78 @@ class CncArduino(QtWidgets.QWidget):
         self.pos_x += self.with_st
         self.ser.write(self.p.move_x(self.go, current=self.pos_x))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}")
+        get_mas(get_data(self.mag_ser))
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def lx_(self):
         self.pos_x -= self.with_st
         self.ser.write(self.p.move_x(self.go, current=self.pos_x, dir=-1))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}")
+        get_mas(get_data(self.mag_ser))
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def ry_(self):
         self.pos_y += self.with_st
         self.ser.write(self.p.move_y(self.go, current=self.pos_y))
         self.ui.textBrowser.append(f"pos_y :{self.pos_y}")
+        get_mas(get_data(self.mag_ser))
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def ly_(self):
         self.pos_y -= self.with_st
         self.ser.write(self.p.move_y(self.go, current=self.pos_y, dir=-1))
         self.ui.textBrowser.append(f"pos_y :{self.pos_y}")
+        get_mas(get_data(self.mag_ser))
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def rz_(self):
         self.pos_z += self.with_st
         self.ser.write(self.p.move_z(self.go, current=self.pos_z))
         self.ui.textBrowser.append(f"pos_z :{self.pos_z}")
+        get_mas(get_data(self.mag_ser))
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def lz_(self):
         self.pos_z -= self.with_st
         self.ser.write(self.p.move_z(self.go, current=self.pos_z, dir=-1))
         self.ui.textBrowser.append(f"pos_z :{self.pos_z}")
+        get_mas(get_data(self.mag_ser))
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def keyPressEvent(self, e):
-        data = get_data(self.mag_ser)
-        get_mas(data)
+        get_mas(get_data(self.mag_ser))
         get_mean()
         if self.ser is not None:
             if e.key() == Qt.Key_6:
                 self.pos_x += self.with_st
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}")
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_4:
                 self.pos_x -= self.with_st
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x, dir=-1))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}")
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_8:
                 self.pos_y += self.with_st
                 self.ser.write(self.p.move_y(self.go, current=self.pos_y))
                 self.ui.textBrowser.append(f"pos_y :{self.pos_y}")
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_2:
                 self.pos_y -= self.with_st
                 self.ser.write(self.p.move_y(self.go, current=self.pos_y, dir=-1))
                 self.ui.textBrowser.append(f"pos_y :{self.pos_y}")
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_7:
                 self.pos_z -= self.with_st
                 self.ser.write(self.p.move_z(self.go, current=self.pos_z))
                 self.ui.textBrowser.append(f"pos_z :{self.pos_z}")
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_9:
                 self.pos_z -= self.with_st
                 self.ser.write(self.p.move_z(self.go, current=self.pos_z, dir=-1))
                 self.ui.textBrowser.append(f"pos_z :{self.pos_z}")
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_1:
                 self.setmax_r()
             elif e.key() == Qt.Key_3:
@@ -210,7 +224,7 @@ class CncArduino(QtWidgets.QWidget):
     def closeEvent(self, e):
         result = QtWidgets.QMessageBox.question(self,
             "Подтверждение закрытия окна",
-            "Вы действительно хотите закрыть окно?",
+            "Сохранить результаты измерения?",
             QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
             QtWidgets.QMessageBox.No)
         if result == QtWidgets.QMessageBox.Yes:
@@ -220,7 +234,8 @@ class CncArduino(QtWidgets.QWidget):
             saveConfig({"current_x": self.pos_x, "current_y": self.pos_y, "current_z": self.pos_z}, "coords.json")
             QtWidgets.QWidget.closeEvent(self, e)
         else:
-            e.ignore()
+            saveConfig({"current_x": self.pos_x, "current_y": self.pos_y, "current_z": self.pos_z}, "coords.json")
+            QtWidgets.QWidget.closeEvent(self, e)
 
     def init_param(self):
         self.ser.write(
@@ -242,7 +257,6 @@ class CncArduino(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     window = CncArduino()
     window.show()

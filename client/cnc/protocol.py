@@ -22,17 +22,17 @@ class Protocol(Geometry):
     '''
 
     def go_to_x(self, current, dir=1):
-        self.set_x(current)
+        self.set_x(current * self.normalize)
         steps = self.go_to(current, dir) * self.normalize
         return [ord(c) for c in f"gox:{steps};"]
 
     def go_to_y(self, current, dir=1):
-        self.set_y(current)
+        self.set_y(current * self.normalize)
         steps = self.go_to(current, dir) * self.normalize
         return [ord(c) for c in f"goy:{steps};"]
 
     def go_to_z(self, current, dir=1):
-        self.set_z(current)
+        self.set_z(current * self.normalize)
         steps = self.go_to(current, dir) * self.normalize
         return [ord(c) for c in f"goz:{steps};"]
 
@@ -49,65 +49,65 @@ class Protocol(Geometry):
 
     def move_x(self, steps, current, dir=1):
         if steps is not None:
-            self.set_x(steps)
+            self.set_x(steps * self.normalize)
             if self.min_x <= current <= self.max_x:
                 if dir > 0:
-                    return [ord(c) for c in f"goxr:{steps};"]
+                    return [ord(c) for c in f"goxr:{steps * self.normalize};"]
                 elif dir < 0:
-                    return [ord(c) for c in f"goxl:{steps};"]
+                    return [ord(c) for c in f"goxl:{steps * self.normalize};"]
             elif self.min_x == current:
                 if dir < 0:
                     print("Вы можете двигаться только в положительном направлении")
-                return [ord(c) for c in f"goxr:{steps};"]
+                return [ord(c) for c in f"goxr:{steps * self.normalize};"]
             elif current == self.max_x:
                 if dir > 0:
                     print("Вы можете двигаться только в отрицательном направлении")
-                return [ord(c) for c in f"goxl:{steps};"]
+                return [ord(c) for c in f"goxl:{steps * self.normalize};"]
         return [ord(c) for c in f"goyl:{0};"]
 
     def move_y(self, steps, current, dir=1):
         if steps is not None:
-            self.set_y(steps)
+            self.set_y(steps * self.normalize)
             if self.min_y <= current <= self.max_y:
                 if dir > 0:
-                    return [ord(c) for c in f"goyr:{steps};"]
+                    return [ord(c) for c in f"goyr:{steps * self.normalize};"]
                 elif dir < 0:
-                    return [ord(c) for c in f"goyl:{steps};"]
+                    return [ord(c) for c in f"goyl:{steps * self.normalize};"]
             elif self.min_y == current:
                 if dir < 0:
                     print("Вы можете двигаться только в положительном направлении")
-                return [ord(c) for c in f"goyr:{steps};"]
+                return [ord(c) for c in f"goyr:{steps * self.normalize};"]
             elif current == self.max_y:
                 if dir > 0:
                     print("Вы можете двигаться только в отрицательном направлении")
-                return [ord(c) for c in f"goyl:{steps};"]
+                return [ord(c) for c in f"goyl:{steps * self.normalize};"]
         return [ord(c) for c in f"goyl:{0};"]
 
     def move_z(self, steps, current, dir=1):
         if steps is not None:
-            self.set_z(steps)
+            self.set_z(steps * self.normalize)
             if self.min_z <= current <= self.max_z:
                 if dir > 0:
-                    return [ord(c) for c in f"gozr:{steps};"]
+                    return [ord(c) for c in f"gozr:{steps * self.normalize};"]
                 elif dir < 0:
-                    return [ord(c) for c in f"gozl:{steps};"]
+                    return [ord(c) for c in f"gozl:{steps * self.normalizes};"]
             elif self.min_z == current:
                 if dir < 0:
                     print("Вы можете двигаться только в положительном направлении")
-                return [ord(c) for c in f"gozr:{steps};"]
+                return [ord(c) for c in f"gozr:{steps * self.normalize};"]
             elif current == self.max_z:
                 if dir > 0:
                     print("Вы можете двигаться только в отрицательном направлении")
-                return [ord(c) for c in f"gozl:{steps};"]
+                return [ord(c) for c in f"gozl:{steps * self.normalize};"]
         return [ord(c) for c in f"gozl:{0};"]
 
     '''В начало координат'''
     def gotomax(self):
-        self.set_x(self.max_x)
+        self.set_x(self.max_x * self.normalize)
         return [ord(c) for c in 'gotomax;']
 
     def gotomin(self):
-        self.set_x(self.min_x)
+        self.set_x(self.min_x * self.normalize)
         return [ord(c) for c in 'gotomin;']
 
     '''Остановка всего'''

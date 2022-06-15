@@ -5,12 +5,25 @@ from datetime import datetime
 res = [[], [], [], []]
 mag = []
 
+coors_z = []
+coors_x = []
+coors_y = []
+
+
+def save_coors(coors):
+    coors_z.append(coors[0])
+    coors_x.append(coors[1])
+    coors_y.append(coors[2])
+
 
 def save_data():
     df = pd.DataFrame({
         'row_z': res[0],
         'row_x': res[1],
         'row_y': res[2],
+        'x': coors_x,
+        'y': coors_y,
+        'z': coors_z,
         'temperature': res[3]
     })
     with pd.ExcelWriter(f'{datetime.today().strftime("%d_%m_%y")}.xlsx') as writer:
@@ -37,3 +50,13 @@ def get_mas(mass):
 
 def get_mean():
     mag.append((res[0][-1] + res[1][-1] + res[3][-1]) / 3)
+
+
+def ser_is_open(argument):
+    def decorator(function):
+        def wrapper(*args, **kwargs):
+            if argument is not None:
+                return function(*args, **kwargs)
+            print("Port not connected")
+        return wrapper
+    return decorator
