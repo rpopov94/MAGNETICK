@@ -90,7 +90,7 @@ class Protocol(Geometry):
                 if dir > 0:
                     return [ord(c) for c in f"gozr:{steps * self.normalize};"]
                 elif dir < 0:
-                    return [ord(c) for c in f"gozl:{steps * self.normalizes};"]
+                    return [ord(c) for c in f"gozl:{steps * self.normalize};"]
             elif self.min_z == current:
                 if dir < 0:
                     print("Вы можете двигаться только в положительном направлении")

@@ -41,15 +41,15 @@ def calculate(val):
 
 
 def get_mas(mass):
-    res[0].append(calculate(int(mass[0])))
-    res[1].append(calculate(int(mass[1])))
-    res[2].append(calculate(int(mass[2])))
+    res[0].append(calculate(int(mass[0]) -23))
+    res[1].append(calculate(int(mass[1]) -13))
+    res[2].append(calculate(int(mass[2]) -25))
     res[3].append(int(mass[3]))
     return res
 
 
 def get_mean():
-    mag.append((res[0][-1] + res[1][-1] + res[3][-1]) / 3)
+    mag.append((res[0][-1] + res[1][-1] + res[2][-1]) / 3)
 
 
 def ser_is_open(argument):
