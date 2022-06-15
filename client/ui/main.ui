@@ -33,6 +33,38 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="x_raw">
+       <property name="text">
+        <string>X-Raw</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="y_raw">
+       <property name="text">
+        <string>Y-Raw</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="z_raw">
+       <property name="text">
+        <string>Z-Raw</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mean_raw">
+       <property name="text">
+        <string>MEAN</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QTextBrowser" name="textBrowser"/>
    </item>
    <item>

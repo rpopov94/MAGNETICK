@@ -1,13 +1,15 @@
 import os
 import serial
 from dotenv import load_dotenv
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtCore import Qt
 from cnc import dict_port, conf, loadConfig, saveConfig
 from cnc.protocol import Protocol
+from magnetron.meter import Magnetron
+from client import save_data, get_data, calculate, get_mas
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(os.path.join(basedir, '.CONFIG'))
+load_dotenv(os.path.join(basedir, '.config'))
 
 
 class CncArduino(QtWidgets.QWidget):
@@ -23,6 +25,8 @@ class CncArduino(QtWidgets.QWidget):
         self.data = None
 
         self.ser = None
+        self.mag_ser = None
+
         try:
             self.ser = serial.Serial(
                 port=dict_port['Arduino'],
@@ -35,7 +39,20 @@ class CncArduino(QtWidgets.QWidget):
             )
             self.ui.textBrowser.append(f"Port {dict_port['Arduino']} is open")
         except:
-            self.ui.textBrowser.append(f"Arduino port not connected")
+            self.ui.textBrowser.append(f"Arduino port not connected.")
+
+        try:
+            self.mag_ser = serial.Serial(
+                port=os.environ.get('3DMAG_SER'),
+                baudrate=9600,
+                bytesize=8,
+                parity='N',
+                stopbits=2,
+                timeout=0.1,
+                writeTimeout=1,
+            )
+        except:
+            self.ui.textBrowser.append(f"Holl sensor not connected.")
 
         if not os.path.exists("coords.json"):
             self.data = conf
@@ -72,6 +89,29 @@ class CncArduino(QtWidgets.QWidget):
         self.ui.end_real_b.clicked.connect(self.setmin_r)
         self.ui.teor_st_b.clicked.connect(self.setmax_t)
         self.ui.end_teor_b.clicked.connect(self.setmin_t)
+
+        self.x_w = Magnetron('RAW_X', component=1)
+        self.y_w = Magnetron('RAW_Y', component=2)
+        self.z_w = Magnetron('RAW_Z', component=0)
+        # self.m_w = Magnetron('MEAN', component=3)
+
+        self.ui.z_raw.clicked.connect(self.graph_z)
+        self.ui.x_raw.clicked.connect(self.graph_x)
+        self.ui.y_raw.clicked.connect(self.graph_y)
+        # self.ui.mean_raw.clicked.connect(self.graph_m)
+
+
+    def graph_z(self):
+        self.z_w.show()
+
+    def graph_x(self):
+        self.x_w.show()
+
+    def graph_y(self):
+        self.y_w.show()
+
+    # def graph_m(self):
+    #     self.m_w.show()
 
     def setmax_r(self):
         self.ser.write(self.p.gotomax())
@@ -124,6 +164,8 @@ class CncArduino(QtWidgets.QWidget):
         self.ui.textBrowser.append(f"pos_z :{self.pos_z}")
 
     def keyPressEvent(self, e):
+        data = get_data(self.mag_ser)
+        get_mas(data)
         if self.ser is not None:
             if e.key() == Qt.Key_6:
                 self.pos_x += self.with_st
@@ -164,13 +206,14 @@ class CncArduino(QtWidgets.QWidget):
 
     def closeEvent(self, e):
         result = QtWidgets.QMessageBox.question(self,
-         "Подтверждение закрытия окна",
-         "Вы действительно хотите закрыть окно?",
-         QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-         QtWidgets.QMessageBox.No)
+            "Подтверждение закрытия окна",
+            "Вы действительно хотите закрыть окно?",
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            QtWidgets.QMessageBox.No)
         if result == QtWidgets.QMessageBox.Yes:
             e.accept()
             self.p.stop()
+            save_data()
             saveConfig({"current_x": self.pos_x, "current_y": self.pos_y, "current_z": self.pos_z}, "coords.json")
             QtWidgets.QWidget.closeEvent(self, e)
         else:
