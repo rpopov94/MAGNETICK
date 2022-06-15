@@ -1,12 +1,14 @@
 import os
 import serial
 from dotenv import load_dotenv
-from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt
 from cnc import dict_port, conf, loadConfig, saveConfig
 from cnc.protocol import Protocol
-from magnetron.meter import Magnetron
-from client import save_data, get_data, calculate, get_mas
+from magnetron._xyz import XYZ
+from magnetron._magnetic import Magnetic
+
+from client import save_data, get_data, get_mas, get_mean
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.config'))
@@ -90,15 +92,15 @@ class CncArduino(QtWidgets.QWidget):
         self.ui.teor_st_b.clicked.connect(self.setmax_t)
         self.ui.end_teor_b.clicked.connect(self.setmin_t)
 
-        self.x_w = Magnetron('RAW_X', component=1)
-        self.y_w = Magnetron('RAW_Y', component=2)
-        self.z_w = Magnetron('RAW_Z', component=0)
-        # self.m_w = Magnetron('MEAN', component=3)
+        self.x_w = XYZ('RAW_X', component=1)
+        self.y_w = XYZ('RAW_Y', component=2)
+        self.z_w = XYZ('RAW_Z', component=0)
+        self.m_w = Magnetic()
 
         self.ui.z_raw.clicked.connect(self.graph_z)
         self.ui.x_raw.clicked.connect(self.graph_x)
         self.ui.y_raw.clicked.connect(self.graph_y)
-        # self.ui.mean_raw.clicked.connect(self.graph_m)
+        self.ui.mean_raw.clicked.connect(self.graph_m)
 
 
     def graph_z(self):
@@ -110,8 +112,8 @@ class CncArduino(QtWidgets.QWidget):
     def graph_y(self):
         self.y_w.show()
 
-    # def graph_m(self):
-    #     self.m_w.show()
+    def graph_m(self):
+        self.m_w.show()
 
     def setmax_r(self):
         self.ser.write(self.p.gotomax())
@@ -166,6 +168,7 @@ class CncArduino(QtWidgets.QWidget):
     def keyPressEvent(self, e):
         data = get_data(self.mag_ser)
         get_mas(data)
+        get_mean()
         if self.ser is not None:
             if e.key() == Qt.Key_6:
                 self.pos_x += self.with_st

@@ -1,6 +1,5 @@
-import serial
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QDialog, QApplication, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QDialog, QVBoxLayout
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
@@ -19,9 +18,9 @@ class MonitorPort(QtCore.QObject):
             QtCore.QThread.msleep(1000)
 
 
-class Magnetron(QDialog):
+class XYZ(QDialog):
     def __init__(self, gname, component, parent=None):
-        super(Magnetron, self).__init__(parent)
+        super(XYZ, self).__init__(parent)
 
         self.component = component
         self.setWindowTitle(gname)
