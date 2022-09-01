@@ -20,8 +20,8 @@
 #define interruptPin_3  2
 #define directionPin_1  7
 
-volatile int32_t default_speed = 1000;
-volatile int32_t default_acceleration = 100;
+volatile int32_t default_speed = 8000;
+volatile int32_t default_acceleration = 500;
 
 volatile int32_t maxX = 10000;
 volatile int32_t minX = 0;
