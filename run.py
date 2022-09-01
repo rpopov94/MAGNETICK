@@ -1,3 +1,5 @@
+# !/usr/local/bin/python
+# -*- coding: utf-8 -*-
 import os
 import serial
 from dotenv import load_dotenv
@@ -8,10 +10,11 @@ from client.cnc.protocol import Protocol
 from client.magnetron._xyz import XYZ
 from client.magnetron._magnetic import Magnetic
 from client import save_data, get_data, get_mas, get_mean, save_coors
+import sys
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.config'))
-
 
 class CncArduino(QtWidgets.QWidget):
     go = int(os.environ.get('N_STEP'))
