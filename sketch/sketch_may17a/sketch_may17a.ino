@@ -56,7 +56,7 @@ void gotoY(int32_t pos){
 void gotoZ(int32_t pos){
   int32_t current_pos = stepper_3->getCurrentPosition();
   int32_t steps;
-  if(pos>current_pos && minZ <= current_pos <= maxZ)
+  if(pos > current_pos && minZ <= current_pos <= maxZ)
   {
     steps = pos - current_pos;
   }else if(pos<current_pos && minZ <= current_pos <= maxZ){
@@ -143,8 +143,8 @@ void setup() {
       stepper_2->setAutoEnable(true);
    }
     if(stepper_3){
-      stepper_3->setDirectionPin(SecondDirPin);
-      stepper_3->setEnablePin(enableSecondPin);
+      stepper_3->setDirectionPin(ThreeDirPin);
+      stepper_3->setEnablePin(enableThreePin);
       stepper_3->setAutoEnable(true);
   }
 }
@@ -216,6 +216,10 @@ void loop() {
       Serial.println("go rz "+ String(compar[1])); 
       go_z(compar[1].toInt());
     }
+    else if(compar[0] == "gozl"){
+      Serial.println("go lz "+ String(compar[1]));
+      go_z(compar[1].toInt()* -1);
+    }
     else if(compar[0] == "goxl"){
       Serial.println("go lx "+ String(compar[1]));
       go_x(compar[1].toInt()*l_direction);
@@ -223,10 +227,6 @@ void loop() {
     else if(compar[0] == "goyl"){
       Serial.println("go ly "+ String(compar[1]));
       go_y(compar[1].toInt()*l_direction); 
-    }
-    else if(compar[0] == "gozl"){
-      Serial.println("go lz "+ String(compar[1]));
-      go_z(compar[1].toInt()*l_direction);
     }
     else if(compar[0] == "gox"){
       Serial.println("go lx "+ String(compar[1]));

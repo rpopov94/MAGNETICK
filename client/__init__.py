@@ -50,13 +50,3 @@ def get_mas(mass):
 
 def get_mean():
     mag.append((res[0][-1] + res[1][-1] + res[2][-1]) / 3)
-
-
-def ser_is_open(argument):
-    def decorator(function):
-        def wrapper(*args, **kwargs):
-            if argument is not None:
-                return function(*args, **kwargs)
-            print("Port not connected")
-        return wrapper
-    return decorator

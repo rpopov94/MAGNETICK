@@ -1,4 +1,4 @@
-from cnc.geomerty import Geometry
+from client.cnc.geomerty import Geometry
 
 
 class Protocol(Geometry):

@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
-from client import res
+from client import res, coors_y, coors_x, coors_z
 
 
 class MonitorPort(QtCore.QObject):

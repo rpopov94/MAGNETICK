@@ -3,10 +3,10 @@ import serial
 from dotenv import load_dotenv
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt
-from cnc import dict_port, conf, loadConfig, saveConfig
-from cnc.protocol import Protocol
-from magnetron._xyz import XYZ
-from magnetron._magnetic import Magnetic
+from client.cnc import dict_port, conf, loadConfig, saveConfig
+from client.cnc.protocol import Protocol
+from client.magnetron._xyz import XYZ
+from client.magnetron._magnetic import Magnetic
 from client import save_data, get_data, get_mas, get_mean, save_coors
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -14,12 +14,10 @@ load_dotenv(os.path.join(basedir, '.config'))
 
 
 class CncArduino(QtWidgets.QWidget):
-    with_st = int(os.environ.get('N_STEP'))
-    go = with_st
-
+    go = int(os.environ.get('N_STEP'))
     def __init__(self):
         super().__init__()
-        Form, Base = uic.loadUiType(basedir + "/ui/main.ui")
+        Form, Base = uic.loadUiType(basedir + "/client/ui/main.ui")
         self.ui = Form()
         self.ui.setupUi(self)
         self.data = None
@@ -133,81 +131,83 @@ class CncArduino(QtWidgets.QWidget):
         self.ui.textBrowser.append(f"coordinats : in set start position")
 
     def rx_(self):
-        self.pos_x += self.with_st
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
+        self.pos_x += self.go
         self.ser.write(self.p.move_x(self.go, current=self.pos_x))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
-        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def lx_(self):
-        self.pos_x -= self.with_st
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
+        self.pos_x -= self.go
         self.ser.write(self.p.move_x(self.go, current=self.pos_x, dir=-1))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
-        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def ry_(self):
-        self.pos_y += self.with_st
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
+        self.pos_y += self.go
         self.ser.write(self.p.move_y(self.go, current=self.pos_y))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
-        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def ly_(self):
-        self.pos_y -= self.with_st
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
+        self.pos_y -= self.go
         self.ser.write(self.p.move_y(self.go, current=self.pos_y, dir=-1))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
-        save_coors([self.pos_x, self.pos_y, self.pos_z])
 
     def rz_(self):
-        self.pos_z += self.with_st
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
+        self.pos_z += self.go
         self.ser.write(self.p.move_z(self.go, current=self.pos_z))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
-        save_coors([self.pos_x, self.pos_y, self.pos_z])
+
 
     def lz_(self):
-        self.pos_z -= self.with_st
+        save_coors([self.pos_x, self.pos_y, self.pos_z])
+        self.pos_z -= self.go
         self.ser.write(self.p.move_z(self.go, current=self.pos_z, dir=-1))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
-        save_coors([self.pos_x, self.pos_y, self.pos_z])
+
 
     def keyPressEvent(self, e):
         get_mas(get_data(self.mag_ser))
         get_mean()
         if self.ser is not None:
             if e.key() == Qt.Key_6:
-                self.pos_x += self.with_st
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
+                self.pos_x += self.go
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
-                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_4:
-                self.pos_x -= self.with_st
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
+                self.pos_x -= self.go
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x, dir=-1))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
-                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_8:
-                self.pos_y += self.with_st
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
+                self.pos_y += self.go
                 self.ser.write(self.p.move_y(self.go, current=self.pos_y))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
-                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_2:
-                self.pos_y -= self.with_st
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
+                self.pos_y -= self.go
                 self.ser.write(self.p.move_y(self.go, current=self.pos_y, dir=-1))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
-                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_7:
-                self.pos_z -= self.with_st
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
+                self.pos_z -= self.go
                 self.ser.write(self.p.move_z(self.go, current=self.pos_z))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
-                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_9:
-                self.pos_z += self.with_st
+                save_coors([self.pos_x, self.pos_y, self.pos_z])
+                self.pos_z += self.go
                 self.ser.write(self.p.move_z(self.go, current=self.pos_z, dir=-1))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
-                save_coors([self.pos_x, self.pos_y, self.pos_z])
             elif e.key() == Qt.Key_1:
                 self.setmax_r()
             elif e.key() == Qt.Key_3:
