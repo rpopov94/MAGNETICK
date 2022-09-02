@@ -5,5 +5,4 @@ __pycache__
 *.obj
 *.xlsx
 *.txt
-.config
 *.bat

@@ -77,6 +77,8 @@ class CncArduino(QtWidgets.QWidget):
             normalize=int(os.environ.get('NORMALIZE'))
         )
 
+        self.save_z = int(os.environ.get("SAVE_Z"))
+
         self.ui.init_p.clicked.connect(self.init_param)
         self.ui.clear_b.clicked.connect(self.clear_w)
         self.ui.stop_b.clicked.connect(self.stop_m)
@@ -233,7 +235,7 @@ class CncArduino(QtWidgets.QWidget):
         if result == QtWidgets.QMessageBox.Yes:
             e.accept()
             self.p.stop()
-            save_data()
+            save_data(self.save_z)
             saveConfig({"current_x": self.pos_x, "current_y": self.pos_y, "current_z": self.pos_z}, "coords.json")
             QtWidgets.QWidget.closeEvent(self, e)
         else:

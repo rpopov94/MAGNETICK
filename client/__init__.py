@@ -16,19 +16,25 @@ def save_coors(coors):
     coors_y.append(coors[2])
 
 
-def save_data():
-    np.savetxt(f'{datetime.today().strftime("%d_%m_%y")}.txt',
-        np.array([
-            coors_x,
-            coors_y,
-            res[0],
-            res[1]
-        ]),
-        fmt='%.18e',
-        delimiter='\t\t',
-        newline='\n',
-        header="x	y	Bx	By"
-    )
+def save_data(save_z=False):
+    if save_z:
+       np.savetxt(f'{datetime.today().strftime("%d_%m_%y")}.txt',
+            np.array([coors_x, coors_y, coors_z,  res[1], res[2], res[0]]),
+            fmt='%.18e',
+            delimiter='\t\t',
+            newline='\n',
+            header="x	y	Bx	By",
+            comments=''
+        )
+    else: 
+        np.savetxt(f'{datetime.today().strftime("%d_%m_%y")}.txt',
+            np.array([coors_x, coors_y, res[0], res[1]]),
+            fmt='%.18e',
+            delimiter='\t\t',
+            newline='\n',
+            header="x	y	Bx	By",
+            comments=''
+        )
 
 
 def get_data(port):
