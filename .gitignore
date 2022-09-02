@@ -4,5 +4,6 @@ __pycache__
 *.pyc
 *.obj
 *.xlsx
+*.txt
 .config
-run.bat
+*.bat
