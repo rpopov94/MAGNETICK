@@ -17,17 +17,16 @@ def save_coors(coors):
 
 
 def save_data():
-    df = np.array([
-        res[0],
-        res[1],
-        coors_x,
-        coors_y
-    ])
     np.savetxt(f'{datetime.today().strftime("%d_%m_%y")}.txt',
-        df,
+        np.array([
+            coors_x,
+            coors_y,
+            res[0],
+            res[1]
+        ]),
         fmt='%.18e',
         delimiter='\t\t',
-        header='x	y	Bx	By'
+        header="x	y	Bx	By"
     )
 
 
