@@ -26,6 +26,7 @@ def save_data():
         ]),
         fmt='%.18e',
         delimiter='\t\t',
+        newline='\n',
         header="x	y	Bx	By"
     )
 
