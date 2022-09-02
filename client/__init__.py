@@ -1,5 +1,5 @@
 import datetime
-import pandas as pd
+import numpy as np
 from datetime import datetime
 
 res = [[], [], [], []]
@@ -17,19 +17,18 @@ def save_coors(coors):
 
 
 def save_data():
-    df = pd.DataFrame({
-        'row_z': res[0],
-        'row_x': res[1],
-        'row_y': res[2],
-        'x': coors_x,
-        'y': coors_y,
-        'z': coors_z,
-        'temperature': res[3]
-    })
-    with pd.ExcelWriter(f'{datetime.today().strftime("%d_%m_%y")}.xlsx') as writer:
-        df.to_excel(writer, sheet_name='sample', index=False)
-    writer.save()
-    writer.close()
+    df = np.array([
+        res[0],
+        res[1],
+        coors_x,
+        coors_y
+    ])
+    np.savetxt(f'{datetime.today().strftime("%d_%m_%y")}.txt',
+        df,
+        fmt='%.18e',
+        delimiter='\t\t',
+        header='x	y	Bx	By'
+    )
 
 
 def get_data(port):
