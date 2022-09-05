@@ -1,5 +1,9 @@
+#-*- coding: utf-8 -*-
+
 import datetime
-import numpy as np
+import csv
+from pickle import FALSE
+import pandas as pd
 from datetime import datetime
 
 res = [[], [], [], []]
@@ -16,27 +20,73 @@ def save_coors(coors):
     coors_y.append(coors[2])
 
 
+# def save_data(save_z=False):
+#     f = open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'w')
+#     writer = csv.writer(f, delimiter ="\t")
+#     if save_z:
+#         header = ['x', 'y', 'z', 'Bx', 'By', 'Bz']
+#         writer.writerow(header)
+#         f.close()
+#         with open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'a', newline='\n') as data:
+#             writer_rows = csv.writer(data, delimiter = '\t')
+#             for i in range(len(coors_x)):
+#                 writer_rows.writerow({
+#                     coors_x[i], 
+#                     coors_y[i],
+#                     coors_z[i],
+#                     res[1][i],
+#                     res[2][i],
+#                     res[0][i]
+#                 })
+#             data.close()          
+#     else:
+#         header = ['x', 'y', 'Bx', 'By']
+#         writer.writerow(header)
+#         f.close()
+#         with open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'a', newline='\n') as data:
+#             writer_rows = csv.writer(data, delimiter ="\t")
+#             for i in range(len(coors_x)):
+#                 writer_rows.writerow({
+#                     coors_x[i], 
+#                     coors_y[i],
+#                     res[1][i],
+#                     res[2][i],
+#                 })
+#             data.close()
 def save_data(save_z=False):
     f = open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'w')
-    f.close()
-    import csv
-    with open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'w',  encoding='UTF8', newline='') as save_data:
-        if save_z:
-            header = ['x', 'y', 'z', 'Bx', 'By', 'Bz']
-            rows =  {'x': coors_x, 'y': coors_y, 'z': coors_z, 'Bx': res[1], 'By': res[2], 'Bz': res[2]}
-            write = csv.DictWriter(save_data, fieldnames=header)
-            write.writeheader()
-            write.writerow(rows)
-        else:
-            header = ['x', 'y', 'Bx', 'By']
-            rows =  {'x': coors_x, 'y': coors_y, 'Bx': res[1], 'By': res[2]}
-            write = csv.DictWriter(save_data, fieldnames=header)
-            write.writeheader()
-            write.writerow(rows)
-        save_data.close()
-
-
-
+    if save_z:
+        header = ['x', 'y', 'z', 'Bx', 'By', 'Bz\n']
+        f.write("\t".join(header))
+        f.close()
+        with open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'a', newline='\n') as data:
+            for i in range(len(coors_x)):
+                data.write("\t\t".join([
+                    str(coors_x[i]), 
+                    str(coors_y[i]),
+                    str(coors_z[i]),
+                    str(res[1][i]),
+                    str(res[2][i]),
+                    str(res[0][i]), 
+                    '\n'
+                ]))
+            data.close()          
+    else:
+        header = ['x', 'y', 'Bx', 'By\n']
+        f.write("\t".join(header))
+        f.close()
+        with open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'a', newline='\n') as data:
+            for i in range(len(coors_x)):
+                data.write("\t\t".join(
+                    [
+                        str(coors_x[i]), 
+                        str(coors_y[i]),
+                        str(res[1][i]),
+                        str(res[2][i]),  
+                        '\n'
+                    ]
+                ))
+            data.close()
 
 
 def get_data(port):
