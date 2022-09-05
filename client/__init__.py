@@ -17,8 +17,10 @@ def save_coors(coors):
 
 
 def save_data(save_z=False):
+    f = open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'w')
+    f.close()
     import csv
-    with open(f'{datetime.today().strftime("%d_%m_%y")}.txt') as save_data:
+    with open(f'{datetime.today().strftime("%d_%m_%y")}.txt', 'w',  encoding='UTF8', newline='') as save_data:
         if save_z:
             header = ['x', 'y', 'z', 'Bx', 'By', 'Bz']
             rows =  {'x': coors_x, 'y': coors_y, 'z': coors_z, 'Bx': res[1], 'By': res[2], 'Bz': res[2]}
