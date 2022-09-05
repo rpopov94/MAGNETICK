@@ -17,24 +17,24 @@ def save_coors(coors):
 
 
 def save_data(save_z=False):
-    if save_z:
-       np.savetxt(f'{datetime.today().strftime("%d_%m_%y")}.txt',
-            np.array([coors_x, coors_y, coors_z,  res[1], res[2], res[0]]),
-            fmt='%.18e',
-            delimiter='\t\t',
-            newline='\n',
-            header="x	y	Bx	By",
-            comments=''
-        )
-    else: 
-        np.savetxt(f'{datetime.today().strftime("%d_%m_%y")}.txt',
-            np.array([coors_x, coors_y, res[0], res[1]]),
-            fmt='%.18e',
-            delimiter='\t\t',
-            newline='\n',
-            header="x	y	Bx	By",
-            comments=''
-        )
+    import csv
+    with open(f'{datetime.today().strftime("%d_%m_%y")}.txt') as save_data:
+        if save_z:
+            header = ['x', 'y', 'z', 'Bx', 'By', 'Bz']
+            rows =  {'x': coors_x, 'y': coors_y, 'z': coors_z, 'Bx': res[1], 'By': res[2], 'Bz': res[2]}
+            write = csv.DictWriter(save_data, fieldnames=header)
+            write.writeheader()
+            write.writerows(rows)
+        else:
+            header = ['x', 'y', 'Bx', 'By']
+            rows =  {'x': coors_x, 'y': coors_y, 'Bx': res[1], 'By': res[2]}
+            write = csv.DictWriter(save_data, fieldnames=header)
+            write.writeheader()
+            write.writerows(rows)
+        save_data.close()
+
+
+
 
 
 def get_data(port):
