@@ -26,13 +26,13 @@ def save_data(save_z=False):
             rows =  {'x': coors_x, 'y': coors_y, 'z': coors_z, 'Bx': res[1], 'By': res[2], 'Bz': res[2]}
             write = csv.DictWriter(save_data, fieldnames=header)
             write.writeheader()
-            write.writerows(rows)
+            write.writerow(rows)
         else:
             header = ['x', 'y', 'Bx', 'By']
             rows =  {'x': coors_x, 'y': coors_y, 'Bx': res[1], 'By': res[2]}
             write = csv.DictWriter(save_data, fieldnames=header)
             write.writeheader()
-            write.writerows(rows)
+            write.writerow(rows)
         save_data.close()
 
 
