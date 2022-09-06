@@ -71,8 +71,8 @@ void gotoZ(int32_t pos){
 
 void go_x(int32_t val){
   int32_t current_pos = stepper_1->getCurrentPosition();
-  stepper_1->setSpeedInUs(default_speed);
-  stepper_1->setAcceleration(default_acceleration);
+  stepper_1->setSpeedInHz(10000);
+  stepper_1->setAcceleration(1000);
   if(minX <= current_pos <= maxX)
   {
     stepper_1->move(val);
@@ -84,8 +84,8 @@ void go_x(int32_t val){
 }
 void go_y(int32_t val){
   int32_t current_pos = stepper_2->getCurrentPosition();
-  stepper_2->setSpeedInUs(1000);
-  stepper_2->setAcceleration(100);
+  stepper_2->setSpeedInHz(10000);
+  stepper_2->setAcceleration(1000);
   if(minZ <= current_pos <= maxZ)
   {
     stepper_2->move(val);
@@ -97,8 +97,8 @@ void go_y(int32_t val){
 }
 void go_z(int val){
   int32_t current_pos = stepper_3->getCurrentPosition();
-  stepper_3->setSpeedInUs(1000);
-  stepper_3->setAcceleration(100);
+  stepper_3->setSpeedInHz(10000);
+  stepper_3->setAcceleration(default_acceleration);
   if(minZ <= current_pos <= maxZ)
   {
     stepper_3->move(val);
