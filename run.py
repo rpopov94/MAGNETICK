@@ -137,35 +137,50 @@ class CncArduino(QtWidgets.QWidget):
 
     def rx_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        self.pos_x += self.go
+        if self.min_x >= self.pos_x <= self.max_x:
+            self.pos_x += self.go
+        else:
+            pass
         self.ser.write(self.p.move_x(self.go, current=self.pos_x))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
 
     def lx_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        self.pos_x -= self.go
+        if self.min_x >= self.pos_x <= self.max_x:
+            self.pos_x -= self.go
+        else:
+            pass
         self.ser.write(self.p.move_x(self.go, current=self.pos_x, dir=-1))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
 
     def ry_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        self.pos_y += self.go
+        if self.min_y >= self.pos_y <= self.max_y:
+            self.pos_y += self.go
+        else:
+            pass
         self.ser.write(self.p.move_y(self.go, current=self.pos_y))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
 
     def ly_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        self.pos_y -= self.go
+        if self.min_y >= self.pos_y <= self.max_y:
+            self.pos_y -= self.go
+        else:
+            pass
         self.ser.write(self.p.move_y(self.go, current=self.pos_y, dir=-1))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
 
     def rz_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        self.pos_z += self.go
+        if self.min_z >= self.pos_z <= self.max_z:
+            self.pos_z += self.go
+        else:
+            pass
         self.ser.write(self.p.move_z(self.go, current=self.pos_z))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
@@ -173,7 +188,10 @@ class CncArduino(QtWidgets.QWidget):
 
     def lz_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        self.pos_z -= self.go
+        if self.min_z >= self.pos_z <= self.max_z:
+            self.pos_z -= self.go
+        else:
+            pass
         self.ser.write(self.p.move_z(self.go, current=self.pos_z, dir=-1))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
         get_mas(get_data(self.mag_ser))
@@ -185,32 +203,50 @@ class CncArduino(QtWidgets.QWidget):
         if self.ser is not None:
             if e.key() == Qt.Key_4:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
-                self.pos_x += self.go
+                if self.min_x >= self.pos_x <= self.max_x:
+                    self.pos_x -= self.go
+                else:
+                    pass
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
             elif e.key() == Qt.Key_6:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
-                self.pos_x -= self.go
+                if self.min_x >= self.pos_x <= self.max_x:
+                    self.pos_x += self.go
+                else:
+                    pass
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x, dir=-1))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
             elif e.key() == Qt.Key_8:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
-                self.pos_y += self.go
+                if self.min_y >= self.pos_y <= self.max_y:
+                    self.pos_y -= self.go
+                else:
+                    pass
                 self.ser.write(self.p.move_y(self.go, current=self.pos_y))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
             elif e.key() == Qt.Key_2:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
-                self.pos_y -= self.go
+                if self.min_y >= self.pos_y <= self.max_y:
+                    self.pos_y += self.go
+                else:
+                    pass
                 self.ser.write(self.p.move_y(self.go, current=self.pos_y, dir=-1))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
             elif e.key() == Qt.Key_7:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
-                self.pos_z -= self.go
+                if self.min_z >= self.pos_z <= self.max_z:
+                    self.pos_z += self.go
+                else:
+                    pass
                 self.ser.write(self.p.move_z(self.go, current=self.pos_z))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
             elif e.key() == Qt.Key_9:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
-                self.pos_z += self.go
+                if self.min_z >= self.pos_z <= self.max_z:
+                    self.pos_z -= self.go
+                else:
+                    pass
                 self.ser.write(self.p.move_z(self.go, current=self.pos_z, dir=-1))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
             elif e.key() == Qt.Key_1:
