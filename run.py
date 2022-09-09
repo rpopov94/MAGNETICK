@@ -183,12 +183,12 @@ class CncArduino(QtWidgets.QWidget):
         get_mas(get_data(self.mag_ser))
         get_mean()
         if self.ser is not None:
-            if e.key() == Qt.Key_6:
+            if e.key() == Qt.Key_4:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
                 self.pos_x += self.go
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x))
                 self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_н :{self.pos_y}, pos_z :{self.pos_z}")
-            elif e.key() == Qt.Key_4:
+            elif e.key() == Qt.Key_6:
                 save_coors([self.pos_x, self.pos_y, self.pos_z])
                 self.pos_x -= self.go
                 self.ser.write(self.p.move_x(self.go, current=self.pos_x, dir=-1))
