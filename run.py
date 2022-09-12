@@ -137,49 +137,49 @@ class CncArduino(QtWidgets.QWidget):
 
     def rx_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        if self.pos_x < self.p.max_x:
-            self.pos_x += self.go
+        if int(self.p.min_x[0]) < self.pos_x:
+            self.pos_x -= self.go
             self.ser.write(self.p.move_x(self.go))
         get_mas(get_data(self.mag_ser))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_y :{self.pos_y}, pos_z :{self.pos_z}")
         
     def lx_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        if self.p.min_x < self.pos_x:
-            self.pos_x -= self.go
-            self.ser.write(self.p.move_x(self.go, dir=-1))
+        if self.pos_x < int(self.p.max_x[0]):
+           self.pos_x += self.go
+           self.ser.write(self.p.move_x(self.go, -1))
         get_mas(get_data(self.mag_ser))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_y :{self.pos_y}, pos_z :{self.pos_z}")
 
     def ry_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        if self.pos_y < self.p.max_y:
-            self.pos_y += self.go
-            self.ser.write(self.p.move_y(self.go, dir=-1))
+        if int(self.p.min_y[0]) < self.pos_y:
+            self.pos_y -= self.go
+            self.ser.write(self.p.move_y(self.go))
         get_mas(get_data(self.mag_ser))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_y :{self.pos_y}, pos_z :{self.pos_z}")
         
     def ly_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        if self.p.min_y < self.pos_y:
+        if int(self.p.min_y[0]) < self.pos_y:
             self.pos_y -= self.go
-            self.ser.write(self.p.move_y(self.go))
+            self.ser.write(self.p.move_y(self.go, -1))
         get_mas(get_data(self.mag_ser))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_y :{self.pos_y}, pos_z :{self.pos_z}")
 
     def rz_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        if self.pos_z < self.p.max_z:
-            self.pos_z += self.go
+        if int(self.p.min_z[0]) < self.pos_z:
+            self.pos_z -= self.go
             self.ser.write(self.p.move_z(self.go))
         get_mas(get_data(self.mag_ser))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_y :{self.pos_y}, pos_z :{self.pos_z}")
         
     def lz_(self):
         save_coors([self.pos_x, self.pos_y, self.pos_z])
-        if self.p.min_z < self.pos_z:
+        if int(self.p.min_z[0]) < self.pos_z:
             self.pos_z -= self.go
-            self.ser.write(self.p.move_z(self.go, dir=-1))
+            self.ser.write(self.p.move_z(self.go, -1))
         get_mas(get_data(self.mag_ser))
         self.ui.textBrowser.append(f"pos_x :{self.pos_x}, pos_y :{self.pos_y}, pos_z :{self.pos_z}")
 

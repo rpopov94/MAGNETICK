@@ -36,16 +36,16 @@ class Protocol():
 
     def go_to_x(self, current, dir=1):
         self.set_x(current * self.normalize)
-        steps = self.go_to(current, self.max_x, self.min_x, dir) * self.normalize
+        steps = self.go_to(current, self.max_x[0], self.min_x[0], dir) * self.normalize
         return [ord(c) for c in f"gox:{steps};"]
 
     def go_to_y(self, current, dir=1):
         self.set_y(current * self.normalize)
-        steps = self.go_to(current, self.max_y, self.min_y, dir) * self.normalize
+        steps = self.go_to(current, self.max_y[0], self.min_y[0], dir) * self.normalize
         return [ord(c) for c in f"goy:{steps};"]
 
     def go_to_z(self, current, dir=1):
-        steps = self.go_to(current, self.max_z, self.min_z, dir) * self.normalize
+        steps = self.go_to(current, self.max_z[0], self.min_z[0], dir) * self.normalize
         return [ord(c) for c in f"goz:{steps};"]
 
     '''Простое перемещение по xyz
