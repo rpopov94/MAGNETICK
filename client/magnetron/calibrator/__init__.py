@@ -10,4 +10,4 @@ class Calibrator(QtCore.QObject):
     def run(self):
         while True:
             self.an_slot.emit()
-            QtCore.QThread.msleep(1000)
+            QtCore.QThread.msleep(100)

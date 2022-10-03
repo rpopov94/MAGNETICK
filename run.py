@@ -121,8 +121,16 @@ class CncArduino(QtWidgets.QWidget):
     
     def getZ(self):
         if self.ISCALIBRATE:
+            if len(res[0]) > 10:
+                del res[0][0]
             get_mas(get_data(self.mag_ser))
-            self.ui.lcdZ.display(str(res[0][-1]))
+            self.ui.lcdZ.setText(str(round(res[0][-1], 6)))
+            self.ui.calibrate.setText("Stop")
+        else:
+            self.ui.calibrate.setText("Calibrate")
+            if len(res[0]) > 0:
+                res[0] = []
+            
 
     def graph_z(self):
         self.z_w.show()
