@@ -1,20 +1,23 @@
 # !/usr/local/bin/python
 # -*- coding: utf-8 -*-
-import os
+import os, sys
 import serial
 from dotenv import load_dotenv
 from PyQt5 import QtWidgets, uic
+from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
+from client import res
 from client.cnc import dict_port, conf, loadConfig, saveConfig
 from client.cnc.protocol import Protocol
 from client.magnetron._xyz import XYZ
 from client.magnetron._magnetic import Magnetic
 from client import save_data, get_data, get_mas, get_mean, save_coors
-import sys
+from client.magnetron.calibrator import Calibrator
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.config'))
+
 
 class CncArduino(QtWidgets.QWidget):
     go = int(os.environ.get('N_STEP'))
@@ -79,7 +82,7 @@ class CncArduino(QtWidgets.QWidget):
 
         self.save_z = int(os.environ.get("SAVE_Z"))
 
-        self.ui.init_p.clicked.connect(self.init_param)
+        # self.ui.init_p.clicked.connect(self.init_param)
         self.ui.clear_b.clicked.connect(self.clear_w)
         self.ui.stop_b.clicked.connect(self.stop_m)
         self.ui.x_right.clicked.connect(self.rx_)
@@ -102,6 +105,24 @@ class CncArduino(QtWidgets.QWidget):
         self.ui.x_raw.clicked.connect(self.graph_x)
         self.ui.y_raw.clicked.connect(self.graph_y)
         self.ui.mean_raw.clicked.connect(self.graph_m)
+
+        self.ISCALIBRATE = False
+        self.ui.calibrate.clicked.connect(self.thClbRun)
+
+        self.thClb = QtCore.QThread()    
+        self.clb = Calibrator()
+        self.clb.moveToThread(self.thClb)
+        self.clb.an_slot.connect(self.getZ)
+        self.thClb.started.connect(self.clb.run)
+        self.thClb.start(QtCore.QThread.LowestPriority)
+
+    def thClbRun(self):
+        self.ISCALIBRATE = not(self.ISCALIBRATE)
+    
+    def getZ(self):
+        if self.ISCALIBRATE:
+            get_mas(get_data(self.mag_ser))
+            self.ui.lcdZ.display(str(res[0][-1]))
 
     def graph_z(self):
         self.z_w.show()
@@ -247,16 +268,16 @@ class CncArduino(QtWidgets.QWidget):
             saveConfig({"current_x": self.pos_x, "current_y": self.pos_y, "current_z": self.pos_z}, "coords.json")
             QtWidgets.QWidget.closeEvent(self, e)
 
-    def init_param(self):
-        self.ser.write(
-            self.p.set_speed(
-                int(os.environ.get("SPEED"))
-            ))
-        self.ser.write(
-            self.p.set_acceleration(
-                int(os.environ.get("ACCELERATION"))
-            ))
-        self.ui.textBrowser.append(f"Скорость: {os.environ.get('SPEED')}\nУскорение: {os.environ.get('ACCELERATION')}")
+    # def init_param(self):
+    #     self.ser.write(
+    #         self.p.set_speed(
+    #             int(os.environ.get("SPEED"))
+    #         ))
+    #     self.ser.write(
+    #         self.p.set_acceleration(
+    #             int(os.environ.get("ACCELERATION"))
+    #         ))
+    #     self.ui.textBrowser.append(f"Скорость: {os.environ.get('SPEED')}\nУскорение: {os.environ.get('ACCELERATION')}")
 
     def clear_w(self):
         self.ui.textBrowser.clear()

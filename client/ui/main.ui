@@ -68,11 +68,18 @@
     <widget class="QTextBrowser" name="textBrowser"/>
    </item>
    <item>
-    <widget class="QPushButton" name="init_p">
-     <property name="text">
-      <string>INIT</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="calibrLayout">
+     <item>
+      <widget class="QLCDNumber" name="lcdZ"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="calibrate">
+       <property name="text">
+        <string>CALIBRATE</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -90,17 +97,17 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="end_real_b">
-       <property name="text">
-        <string>END REAL</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="end_teor_b">
        <property name="text">
         <string>END TEOR</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="end_real_b">
+       <property name="text">
+        <string>END REAL</string>
        </property>
       </widget>
      </item>
